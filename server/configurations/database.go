@@ -33,8 +33,10 @@ func DatabaseConnect(config Config) *gorm.DB {
 
 	err = db.AutoMigrate(&entities.Rol{})
 	err = db.AutoMigrate(&entities.AccountStatus{})
+	err = db.AutoMigrate(&entities.ReviewStatus{})
 	err = db.AutoMigrate(&entities.UserAccount{})
 	err = db.AutoMigrate(&entities.UserHasRole{})
+	err = db.AutoMigrate(&entities.KYCReviewRequest{})
 
 	return db
 

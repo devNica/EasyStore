@@ -21,6 +21,7 @@ type UserAccount struct {
 	UpdatedAt     time.Time     `gorm:"column:updated_at"`
 	StatusId      uint8         `gorm:"column:status_id;primaryKey"`
 	Roles         []UserHasRole `gorm:"foreignKey:user_id"`
+	Stores        []Store       `gorm:"foreignKey:owner_id"`
 }
 
 type AccountStatus struct {
