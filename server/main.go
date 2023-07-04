@@ -8,6 +8,7 @@ import (
 
 func main() {
 	config := configurations.New()
+	configurations.DatabaseConnect(config)
 
 	app := fiber.New(configurations.NewFiber())
 
