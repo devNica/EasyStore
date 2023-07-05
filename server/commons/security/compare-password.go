@@ -11,7 +11,7 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
-func comparePasswordAndHash(password, encodeHash string, acg *configurations.Argon2Config) (match bool, err error) {
+func ComparePasswordAndHash(password, encodeHash string, acg *configurations.Argon2Config) (match bool, err error) {
 	p, salt, hash, error := decodeHash(encodeHash, acg)
 	if error != nil {
 		return false, error

@@ -20,6 +20,7 @@ func NewAuthController(service *services.UserAccountService, config configuratio
 
 func (controller authController) Route(app *fiber.App) {
 	app.Post("/easystore/v1/auth/register", controller.UserRegister)
+	app.Post("/easystore/v1/auth/login", controller.UserLogin)
 }
 
 func (controller authController) UserRegister(c *fiber.Ctx) error {
@@ -32,5 +33,18 @@ func (controller authController) UserRegister(c *fiber.Ctx) error {
 		Code:    201,
 		Message: "User has been created successfully",
 		Data:    "",
+	})
+}
+
+func (controller authController) UserLogin(c *fiber.Ctx) error {
+	var request requests.UserAccountLoginRequestModel
+	err := c.BodyParser(&request)
+	exceptions.PanicLogging(err)
+
+	user := controller.UserAccountService.GetUserByEmail(c.Context(), request)
+	return c.Status(fiber.StatusCreated).JSON(models.GeneralHttpResponseModel{
+		Code:    200,
+		Message: "Login successfully",
+		Data:    user,
 	})
 }

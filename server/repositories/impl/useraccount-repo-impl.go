@@ -1,6 +1,8 @@
 package impl
 
 import (
+	"errors"
+
 	"github.com/devnica/EasyStore/entities"
 	"github.com/devnica/EasyStore/repositories"
 	"github.com/google/uuid"
@@ -41,4 +43,43 @@ func (repo *userAccountRepositoryImpl) CreateUser(newUser entities.UserAccount, 
 	}
 
 	return nil
+}
+
+func (repo *userAccountRepositoryImpl) FindUserByEmail(email string) (entities.UserAccount, error) {
+
+	var user entities.UserAccount
+
+	result := repo.DB.Select("id, email, password").Where("email = ?", email).First(&user)
+
+	if result.RowsAffected == 0 {
+		return entities.UserAccount{}, errors.New("User not found")
+	}
+
+	return entities.UserAccount{
+		Id:       user.Id,
+		Email:    user.Email,
+		Password: user.Password,
+	}, nil
+
+}
+
+func (repo *userAccountRepositoryImpl) FetchRolesByUserId(userId string) ([]entities.Rol, error) {
+
+	var RolesResult []entities.Rol
+
+	result := repo.DB.Table("rol").
+		Select(`
+		rol.id,
+		rol.rol
+	`).
+		Joins("inner join user_has_role on user_has_role.rol_id = rol.id").
+		Joins("inner join user_account on user_account.id = user_has_role.user_id").
+		Where("user_account.id = ?", userId).Scan(&RolesResult)
+
+	if result.RowsAffected == 0 {
+		return []entities.Rol{}, errors.New("User has no roles assigned")
+	}
+
+	return RolesResult, nil
+
 }
