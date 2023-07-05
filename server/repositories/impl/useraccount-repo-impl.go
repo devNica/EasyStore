@@ -83,3 +83,14 @@ func (repo *userAccountRepositoryImpl) FetchRolesByUserId(userId string) ([]dao.
 	return RolesResult, nil
 
 }
+
+func (repo *userAccountRepositoryImpl) InsertPersonalInfo(personalInfo dto.PersonalInfoDTOModel, userId string) error {
+
+	result := repo.DB.Model(&entities.UserAccount{}).Where("id=?", userId).Updates(personalInfo)
+
+	if result.RowsAffected == 0 {
+		return errors.New("Personal info update failure")
+	}
+
+	return nil
+}

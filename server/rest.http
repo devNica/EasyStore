@@ -15,3 +15,16 @@ Content-Type: application/json
     "email": "lukas@devnica.com",
     "password": "Lamisma123*"
 }
+
+###### update personal info
+PUT  http://localhost:8200/easystore/v1/user/0cc1b003-f0a7-4124-b0f6-8418b5b032e0 HTTP/1.1
+Content-Type: application/json
+
+{
+    "phoneNumber": "+502-897584787",
+    "dni": "GCL-009078-LKU",
+    "firstname": "Lucas Marcos",
+    "lastname": "Marsell",
+    "address": "La misma donde siempre he vivido",
+    "birthdate": "1978-07-23" 
+}

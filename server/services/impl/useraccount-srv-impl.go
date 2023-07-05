@@ -2,6 +2,7 @@ package impl
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/devnica/EasyStore/commons"
@@ -78,4 +79,26 @@ func (srv *userAccountServiceImpl) GetUserByEmail(ctx context.Context, data requ
 	login.Token = security.GenerateToken(login.UserId, rolesMap)
 
 	return login
+}
+
+func (srv *userAccountServiceImpl) UpdatePersonalInfo(ctx context.Context, data request.UpdatePersonalInfoRequestModel, userId string) {
+
+	personalInfo := dto.PersonalInfoDTOModel{
+		PhoneNumber:   data.PhoneNumber,
+		DNI:           data.DNI,
+		FirstName:     data.FirstName,
+		LastName:      data.LastName,
+		Address:       data.Address,
+		BirthDate:     data.BirthDate,
+		TwoFactorAuth: true,
+		UpdatedAt:     time.Now(),
+		StatusId:      2,
+	}
+
+	err := srv.UserAccountRepository.InsertPersonalInfo(personalInfo, userId)
+
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+
 }

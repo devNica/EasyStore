@@ -9,4 +9,5 @@ type UserAccountRepository interface {
 	CreateUser(newUser dto.UserRegisterDTOModel, rolId uint8) error
 	FindUserByEmail(email string) (dao.FindUserDAOModel, error)
 	FetchRolesByUserId(userId string) ([]dao.RolDAOModel, error)
+	InsertPersonalInfo(personalInfo dto.PersonalInfoDTOModel, userId string) error
 }

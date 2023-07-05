@@ -21,6 +21,7 @@ func NewAuthController(service *services.UserAccountService, config configuratio
 func (controller authController) Route(app *fiber.App) {
 	app.Post("/easystore/v1/auth/register", controller.UserRegister)
 	app.Post("/easystore/v1/auth/login", controller.UserLogin)
+	app.Put("/easystore/v1/user/:userId", controller.UpdatePersonalInfo)
 }
 
 func (controller authController) UserRegister(c *fiber.Ctx) error {
@@ -46,5 +47,20 @@ func (controller authController) UserLogin(c *fiber.Ctx) error {
 		Code:    200,
 		Message: "Login successfully",
 		Data:    user,
+	})
+}
+
+func (controller authController) UpdatePersonalInfo(c *fiber.Ctx) error {
+	var request request.UpdatePersonalInfoRequestModel
+	err := c.BodyParser(&request)
+	exceptions.PanicLogging(err)
+
+	userId := c.Params("userId")
+
+	controller.UserAccountService.UpdatePersonalInfo(c.Context(), request, userId)
+	return c.Status(fiber.StatusCreated).JSON(models.GeneralHttpResponseModel{
+		Code:    200,
+		Message: "Login successfully",
+		Data:    "",
 	})
 }
