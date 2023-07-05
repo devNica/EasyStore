@@ -20,13 +20,18 @@ import (
 
 type userAccountServiceImpl struct {
 	repositories.UserAccountRepository
+	repositories.AdminCommitRepository
 	configurations.Argon2Config
 }
 
 func NewUserAccountServiceImpl(
-	repo *repositories.UserAccountRepository,
+	userRepo *repositories.UserAccountRepository,
+	adminRepo *repositories.AdminCommitRepository,
 	argon *configurations.Argon2Config) services.UserAccountService {
-	return &userAccountServiceImpl{UserAccountRepository: *repo, Argon2Config: *argon}
+	return &userAccountServiceImpl{
+		UserAccountRepository: *userRepo,
+		AdminCommitRepository: *adminRepo,
+		Argon2Config:          *argon}
 }
 
 func (srv *userAccountServiceImpl) UserRegister(
@@ -96,6 +101,20 @@ func (srv *userAccountServiceImpl) UpdatePersonalInfo(ctx context.Context, data 
 	}
 
 	err := srv.UserAccountRepository.InsertPersonalInfo(personalInfo, userId)
+
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+
+	kycReview := dto.KYCReviewDTOModel{
+		Id:             uuid.New(),
+		UserRef:        userId,
+		PreRevStatus:   "awaitingReview",
+		CreatedAt:      time.Now(),
+		ReviewStatusId: 1,
+	}
+
+	err = srv.AdminCommitRepository.InsertKYCReviewHistory(kycReview)
 
 	if err != nil {
 		log.Fatalf(err.Error())

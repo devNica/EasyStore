@@ -18,7 +18,17 @@ func NewUserAccountRepositoryImpl(DB *gorm.DB) repositories.UserAccountRepositor
 	return &userAccountRepositoryImpl{DB: DB}
 }
 
-func (repo *userAccountRepositoryImpl) CreateUser(newUser dto.UserRegisterDTOModel, rolId uint8) error {
+func (repo *userAccountRepositoryImpl) CreateUser(data dto.UserRegisterDTOModel, rolId uint8) error {
+
+	newUser := entities.UserAccount{
+		Id:            data.Id,
+		Email:         data.Email,
+		Password:      data.Password,
+		CreatedAt:     data.CreatedAt,
+		TwoFactorAuth: data.TwoFactorAuth,
+		StatusId:      data.StatusId,
+	}
+
 	err := repo.DB.Transaction(func(tx *gorm.DB) error {
 		if err := tx.Create(&newUser).Error; err != nil {
 			tx.Rollback()

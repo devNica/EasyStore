@@ -19,9 +19,10 @@ func main() {
 
 	// repositories
 	userAccountRepository := repository.NewUserAccountRepositoryImpl(conn)
+	adminCommitRepository := repository.NewAdminCommitRepositoryIMpl(conn)
 
 	//services
-	userAccountService := service.NewUserAccountServiceImpl(&userAccountRepository, &argon)
+	userAccountService := service.NewUserAccountServiceImpl(&userAccountRepository, &adminCommitRepository, &argon)
 
 	// controllers
 	authController := controllers.NewAuthController(&userAccountService, config)
