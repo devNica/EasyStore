@@ -8,6 +8,7 @@ import (
 	service "github.com/devnica/EasyStore/services/impl"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/helmet"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
@@ -26,8 +27,12 @@ func main() {
 	authController := controllers.NewAuthController(&userAccountService, config)
 
 	app := fiber.New(configurations.NewFiber())
+
+	//middlewares
 	app.Use(recover.New())
 	app.Use(cors.New())
+	app.Use(helmet.New())
+	// app.Use(csrf.New())
 
 	app.Get("/welcome", func(c *fiber.Ctx) error {
 		return c.SendString("Hello world")

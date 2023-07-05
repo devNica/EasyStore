@@ -2,19 +2,19 @@ package impl
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/devnica/EasyStore/commons"
 	security "github.com/devnica/EasyStore/commons/security"
 	utils "github.com/devnica/EasyStore/commons/utils"
 	"github.com/devnica/EasyStore/configurations"
-	"github.com/devnica/EasyStore/dto/requests"
-	"github.com/devnica/EasyStore/dto/responses"
-	"github.com/devnica/EasyStore/entities"
 	"github.com/devnica/EasyStore/exceptions"
+	"github.com/devnica/EasyStore/models/dto"
+	"github.com/devnica/EasyStore/models/request"
+	"github.com/devnica/EasyStore/models/response"
 	"github.com/devnica/EasyStore/repositories"
 	"github.com/devnica/EasyStore/services"
+	"github.com/google/uuid"
 )
 
 type userAccountServiceImpl struct {
@@ -30,14 +30,15 @@ func NewUserAccountServiceImpl(
 
 func (srv *userAccountServiceImpl) UserRegister(
 	ctx context.Context,
-	newUser requests.UserAccountRegisterRequestModel) {
+	newUser request.UserAccountRegisterRequestModel) {
 
 	accountStatus := commons.GetAccountStatusFromDictionary()
 	statusId := commons.GetKeyId("unverifiableIdentity", accountStatus)
 
 	hash := security.GeneratePasswordHash(newUser.Password, &srv.Argon2Config)
 
-	user := entities.UserAccount{
+	user := dto.UserRegisterDTOModel{
+		Id:            uuid.New(),
 		Email:         newUser.Email,
 		Password:      hash,
 		TwoFactorAuth: false,
@@ -52,7 +53,7 @@ func (srv *userAccountServiceImpl) UserRegister(
 	exceptions.PanicLogging(err)
 }
 
-func (srv *userAccountServiceImpl) GetUserByEmail(ctx context.Context, data requests.UserAccountLoginRequestModel) responses.UserAccountLoginResponseModel {
+func (srv *userAccountServiceImpl) GetUserByEmail(ctx context.Context, data request.UserAccountLoginRequestModel) response.UserAccountLoginResponseModel {
 
 	user, err := srv.UserAccountRepository.FindUserByEmail(data.Email)
 	exceptions.PanicLogging(err)
@@ -67,7 +68,7 @@ func (srv *userAccountServiceImpl) GetUserByEmail(ctx context.Context, data requ
 
 	roles, err := srv.UserAccountRepository.FetchRolesByUserId(user.Id.String())
 
-	login := responses.UserAccountLoginResponseModel{
+	login := response.UserAccountLoginResponseModel{
 		UserId: user.Id.String(),
 		Email:  user.Email,
 	}
@@ -75,8 +76,6 @@ func (srv *userAccountServiceImpl) GetUserByEmail(ctx context.Context, data requ
 	rolesMap := utils.ConvertRolesToMaps(roles)
 
 	login.Token = security.GenerateToken(login.UserId, rolesMap)
-
-	log.Println(login.Token)
 
 	return login
 }

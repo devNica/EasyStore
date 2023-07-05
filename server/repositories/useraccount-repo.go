@@ -1,9 +1,12 @@
 package repositories
 
-import "github.com/devnica/EasyStore/entities"
+import (
+	"github.com/devnica/EasyStore/models/dao"
+	"github.com/devnica/EasyStore/models/dto"
+)
 
 type UserAccountRepository interface {
-	CreateUser(newUser entities.UserAccount, rolId uint8) error
-	FindUserByEmail(email string) (entities.UserAccount, error)
-	FetchRolesByUserId(userId string) ([]entities.Rol, error)
+	CreateUser(newUser dto.UserRegisterDTOModel, rolId uint8) error
+	FindUserByEmail(email string) (dao.FindUserDAOModel, error)
+	FetchRolesByUserId(userId string) ([]dao.RolDAOModel, error)
 }

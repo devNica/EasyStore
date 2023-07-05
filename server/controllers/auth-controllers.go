@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"github.com/devnica/EasyStore/configurations"
-	"github.com/devnica/EasyStore/dto/requests"
 	"github.com/devnica/EasyStore/exceptions"
 	"github.com/devnica/EasyStore/models"
+	"github.com/devnica/EasyStore/models/request"
 	"github.com/devnica/EasyStore/services"
 	"github.com/gofiber/fiber/v2"
 )
@@ -24,7 +24,7 @@ func (controller authController) Route(app *fiber.App) {
 }
 
 func (controller authController) UserRegister(c *fiber.Ctx) error {
-	var request requests.UserAccountRegisterRequestModel
+	var request request.UserAccountRegisterRequestModel
 	err := c.BodyParser(&request)
 	exceptions.PanicLogging(err)
 
@@ -37,7 +37,7 @@ func (controller authController) UserRegister(c *fiber.Ctx) error {
 }
 
 func (controller authController) UserLogin(c *fiber.Ctx) error {
-	var request requests.UserAccountLoginRequestModel
+	var request request.UserAccountLoginRequestModel
 	err := c.BodyParser(&request)
 	exceptions.PanicLogging(err)
 

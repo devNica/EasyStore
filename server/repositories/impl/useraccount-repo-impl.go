@@ -4,8 +4,9 @@ import (
 	"errors"
 
 	"github.com/devnica/EasyStore/entities"
+	"github.com/devnica/EasyStore/models/dao"
+	"github.com/devnica/EasyStore/models/dto"
 	"github.com/devnica/EasyStore/repositories"
-	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -17,8 +18,7 @@ func NewUserAccountRepositoryImpl(DB *gorm.DB) repositories.UserAccountRepositor
 	return &userAccountRepositoryImpl{DB: DB}
 }
 
-func (repo *userAccountRepositoryImpl) CreateUser(newUser entities.UserAccount, rolId uint8) error {
-	newUser.Id = uuid.New()
+func (repo *userAccountRepositoryImpl) CreateUser(newUser dto.UserRegisterDTOModel, rolId uint8) error {
 	err := repo.DB.Transaction(func(tx *gorm.DB) error {
 		if err := tx.Create(&newUser).Error; err != nil {
 			tx.Rollback()
@@ -45,17 +45,17 @@ func (repo *userAccountRepositoryImpl) CreateUser(newUser entities.UserAccount, 
 	return nil
 }
 
-func (repo *userAccountRepositoryImpl) FindUserByEmail(email string) (entities.UserAccount, error) {
+func (repo *userAccountRepositoryImpl) FindUserByEmail(email string) (dao.FindUserDAOModel, error) {
 
 	var user entities.UserAccount
 
 	result := repo.DB.Select("id, email, password").Where("email = ?", email).First(&user)
 
 	if result.RowsAffected == 0 {
-		return entities.UserAccount{}, errors.New("User not found")
+		return dao.FindUserDAOModel{}, errors.New("User not found")
 	}
 
-	return entities.UserAccount{
+	return dao.FindUserDAOModel{
 		Id:       user.Id,
 		Email:    user.Email,
 		Password: user.Password,
@@ -63,9 +63,9 @@ func (repo *userAccountRepositoryImpl) FindUserByEmail(email string) (entities.U
 
 }
 
-func (repo *userAccountRepositoryImpl) FetchRolesByUserId(userId string) ([]entities.Rol, error) {
+func (repo *userAccountRepositoryImpl) FetchRolesByUserId(userId string) ([]dao.RolDAOModel, error) {
 
-	var RolesResult []entities.Rol
+	var RolesResult []dao.RolDAOModel
 
 	result := repo.DB.Table("rol").
 		Select(`
@@ -77,7 +77,7 @@ func (repo *userAccountRepositoryImpl) FetchRolesByUserId(userId string) ([]enti
 		Where("user_account.id = ?", userId).Scan(&RolesResult)
 
 	if result.RowsAffected == 0 {
-		return []entities.Rol{}, errors.New("User has no roles assigned")
+		return []dao.RolDAOModel{}, errors.New("User has no roles assigned")
 	}
 
 	return RolesResult, nil

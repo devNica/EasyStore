@@ -1,8 +1,10 @@
 package utils
 
-import "github.com/devnica/EasyStore/entities"
+import (
+	"github.com/devnica/EasyStore/models/dao"
+)
 
-func ConvertRolesToMaps(roles []entities.Rol) []map[string]interface{} {
+func ConvertRolesToMaps(roles []dao.RolDAOModel) []map[string]interface{} {
 	var rolesMaps []map[string]interface{}
 
 	for _, rol := range roles {

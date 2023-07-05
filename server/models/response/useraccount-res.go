@@ -1,4 +1,4 @@
-package responses
+package response
 
 type UserAccountLoginResponseModel struct {
 	UserId string `json:"userId"`

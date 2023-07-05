@@ -10,6 +10,7 @@ type UserAccount struct {
 	Id            uuid.UUID     `gorm:"primaryKey;column:id;type:varchar(36);unique"`
 	Email         string        `gorm:"colum:email;type:varchar(255);not null;unique"`
 	Password      string        `gorm:"column:password;type:varchar(255);not null"`
+	PhoneNumber   string        `gorm:"column:phone_number;type:varchar(30);null"`
 	FirstName     string        `gorm:"column:firstname;type:text;size:100;null"`
 	LastName      string        `gorm:"column:lastname;type:text;size:100;null"`
 	Address       string        `gorm:"column:address;type:text;size:200;null"`

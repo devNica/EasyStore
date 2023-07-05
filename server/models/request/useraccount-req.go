@@ -1,4 +1,4 @@
-package requests
+package request
 
 type UserAccountRegisterRequestModel struct {
 	Email    string `json:"email" validate:"required"`
