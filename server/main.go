@@ -14,12 +14,13 @@ import (
 func main() {
 	config := configurations.New()
 	conn := configurations.DatabaseConnect(config)
+	argon := configurations.NewArgonConfig()
 
 	// repositories
 	userAccountRepository := repository.NewUserAccountRepositoryImpl(conn)
 
 	//services
-	userAccountService := service.NewUserAccountServiceImpl(&userAccountRepository)
+	userAccountService := service.NewUserAccountServiceImpl(&userAccountRepository, &argon)
 
 	// controllers
 	authController := controllers.NewAuthController(&userAccountService, config)

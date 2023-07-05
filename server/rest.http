@@ -3,6 +3,6 @@ POST  http://localhost:8200/easystore/v1/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "lam@devnica.com",
+    "email": "lukas2@devnica.com",
     "password": "Lamisma123*"
 }

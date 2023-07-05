@@ -14,7 +14,7 @@ type UserAccount struct {
 	LastName      string        `gorm:"column:lastname;type:text;size:100;null"`
 	Address       string        `gorm:"column:address;type:text;size:200;null"`
 	BirthDate     string        `gorm:"column:birthdate;type:varchar(10);null"`
-	DNI           string        `gorm:"column:dni;type:varchar(50);null;unique"`
+	DNI           string        `gorm:"column:dni;type:varchar(50);null"`
 	TwoFactorAuth bool          `gorm:"column:two_factor_auth;type:bool;default:false"`
 	IsRoot        bool          `gorm:"column:is_root;type:bool;not null;default:false"`
 	CreatedAt     time.Time     `gorm:"column:created_at"`

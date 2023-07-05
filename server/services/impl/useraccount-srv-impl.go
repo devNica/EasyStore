@@ -5,6 +5,8 @@ import (
 	"time"
 
 	"github.com/devnica/EasyStore/commons"
+	argon2 "github.com/devnica/EasyStore/commons/security"
+	"github.com/devnica/EasyStore/configurations"
 	"github.com/devnica/EasyStore/dto/requests"
 	"github.com/devnica/EasyStore/entities"
 	"github.com/devnica/EasyStore/exceptions"
@@ -14,10 +16,13 @@ import (
 
 type userAccountServiceImpl struct {
 	repositories.UserAccountRepository
+	configurations.Argon2Config
 }
 
-func NewUserAccountServiceImpl(repo *repositories.UserAccountRepository) services.UserAccountService {
-	return &userAccountServiceImpl{UserAccountRepository: *repo}
+func NewUserAccountServiceImpl(
+	repo *repositories.UserAccountRepository,
+	argon *configurations.Argon2Config) services.UserAccountService {
+	return &userAccountServiceImpl{UserAccountRepository: *repo, Argon2Config: *argon}
 }
 
 func (srv *userAccountServiceImpl) UserRegister(
@@ -27,9 +32,11 @@ func (srv *userAccountServiceImpl) UserRegister(
 	accountStatus := commons.GetAccountStatusFromDictionary()
 	statusId := commons.GetKeyId("unverifiableIdentity", accountStatus)
 
+	hash := argon2.GeneratePasswordHash(newUser.Password, &srv.Argon2Config)
+
 	user := entities.UserAccount{
 		Email:         newUser.Email,
-		Password:      newUser.Password,
+		Password:      hash,
 		TwoFactorAuth: false,
 		CreatedAt:     time.Now(),
 		StatusId:      statusId,
