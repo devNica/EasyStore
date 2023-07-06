@@ -37,6 +37,7 @@ func DatabaseConnect(config Config) *gorm.DB {
 	err = db.AutoMigrate(&entities.UserAccount{})
 	err = db.AutoMigrate(&entities.UserHasRole{})
 	err = db.AutoMigrate(&entities.KYCReviewRequest{})
+	err = db.AutoMigrate(&entities.Store{})
 
 	return db
 

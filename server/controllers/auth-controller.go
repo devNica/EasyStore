@@ -59,8 +59,8 @@ func (controller authController) UpdatePersonalInfo(c *fiber.Ctx) error {
 
 	controller.UserAccountService.UpdatePersonalInfo(c.Context(), request, userId)
 	return c.Status(fiber.StatusCreated).JSON(models.GeneralHttpResponseModel{
-		Code:    200,
-		Message: "Login successfully",
+		Code:    201,
+		Message: "Update personal info",
 		Data:    "",
 	})
 }

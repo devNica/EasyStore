@@ -20,12 +20,15 @@ func main() {
 	// repositories
 	userAccountRepository := repository.NewUserAccountRepositoryImpl(conn)
 	adminCommitRepository := repository.NewAdminCommitRepositoryIMpl(conn)
+	storeRepository := repository.NewStoreRepositoryImpl(conn)
 
 	//services
 	userAccountService := service.NewUserAccountServiceImpl(&userAccountRepository, &adminCommitRepository, &argon)
+	storeService := service.NewStoreServiceImpl(&storeRepository)
 
 	// controllers
 	authController := controllers.NewAuthController(&userAccountService, config)
+	storeController := controllers.NewStoreController(&storeService, config)
 
 	app := fiber.New(configurations.NewFiber())
 
@@ -41,6 +44,7 @@ func main() {
 
 	//routing
 	authController.Route(app)
+	storeController.Route(app)
 
 	// start app
 	err := app.Listen(config.Get("SERVER_PORT"))
