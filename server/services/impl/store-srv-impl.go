@@ -6,6 +6,7 @@ import (
 	"github.com/devnica/EasyStore/exceptions"
 	"github.com/devnica/EasyStore/models/dto"
 	"github.com/devnica/EasyStore/models/request"
+	"github.com/devnica/EasyStore/models/response"
 	"github.com/devnica/EasyStore/repositories"
 	"github.com/devnica/EasyStore/services"
 	"github.com/google/uuid"
@@ -39,4 +40,29 @@ func (srv *storeServiceImpl) RegisterStore(ctx context.Context, newStore request
 
 	err = srv.StoreRepository.CreateStore(storeDTO)
 	exceptions.PanicLogging(err)
+}
+
+func (srv *storeServiceImpl) GetStoresByOwnerId(ctx context.Context, ownerId string) []response.StoreResponseModel {
+
+	result, err := srv.StoreRepository.FetchStoresByOwnerId(ownerId)
+	exceptions.PanicLogging(err)
+
+	var stores []response.StoreResponseModel
+	for _, store := range result {
+		lat, lng := geohash.Decode(store.GeoHash)
+
+		stores = append(stores, response.StoreResponseModel{
+			StoreId:   store.StoreId,
+			StoreName: store.StoreName,
+			Address:   store.Address,
+			NIT:       store.NIT,
+			IsActive:  store.IsActive,
+			CreatedAt: store.CreatedAt,
+			Latitude:  lat,
+			Longitude: lng,
+		})
+	}
+
+	return stores
+
 }

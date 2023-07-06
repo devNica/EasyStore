@@ -1,7 +1,10 @@
 package impl
 
 import (
+	"fmt"
+
 	"github.com/devnica/EasyStore/entities"
+	"github.com/devnica/EasyStore/models/dao"
 	"github.com/devnica/EasyStore/models/dto"
 	"github.com/devnica/EasyStore/repositories"
 	"gorm.io/gorm"
@@ -31,4 +34,31 @@ func (repo *storeRepositoryImpl) CreateStore(data dto.StoreRegisterDTOModel) err
 		return err
 	}
 	return nil
+}
+
+func (repo *storeRepositoryImpl) FetchStoresByOwnerId(ownerId string) ([]dao.StoreDAOModel, error) {
+	var storeResult []entities.Store
+
+	result := repo.DB.Where("owner_id = ?", ownerId).Find(&storeResult)
+
+	if result.RowsAffected == 0 {
+		return []dao.StoreDAOModel{}, nil
+	}
+
+	var stores []dao.StoreDAOModel
+	for _, store := range storeResult {
+		fmt.Println(store)
+		stores = append(stores, dao.StoreDAOModel{
+			StoreId:   store.Id,
+			StoreName: store.StoreName,
+			Address:   store.Address,
+			NIT:       store.NIT,
+			GeoHash:   store.GeoHash,
+			IsActive:  store.IsActive,
+			CreatedAt: store.CreatedAt,
+			OwnerId:   store.OwnerId,
+		})
+	}
+
+	return stores, nil
 }

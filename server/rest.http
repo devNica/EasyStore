@@ -29,14 +29,21 @@ Content-Type: application/json
     "birthdate": "1978-07-23" 
 }
 
-###### update personal info
+###### register store
 POST  http://localhost:8200/easystore/v1/store/0cc1b003-f0a7-4124-b0f6-8418b5b032e0 HTTP/1.1
 Content-Type: application/json
 
 {
-    "storeName": "Mil delicias",
+    "storeName": "La fondita",
     "address": "ustedes ya saben donde queda",
-    "nit": "RT-00099988776",
-    "latitude": 12.498121,
-    "longitude": -86.695818
+    "nit": "RT-00099988896",
+    "latitude": 11.985082,
+    "longitude": -86.152449
 }
+
+
+###### get all stores by ownerId
+GET  http://localhost:8200/easystore/v1/store/0cc1b003-f0a7-4124-b0f6-8418b5b032e0 HTTP/1.1
+Content-Type: application/json
+
+{}
