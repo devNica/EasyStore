@@ -62,9 +62,9 @@ func (repo *storeRepositoryImpl) FetchStoresByOwnerId(ownerId string) ([]dao.Sto
 	return stores, nil
 }
 
-func (repo *storeRepositoryImpl) UpdateStoreByStoreId(storeId string, storeInfo dto.UpdateStoreDTOModel) error {
+func (repo *storeRepositoryImpl) UpdateStoreByStoreId(relation dto.UserRelationShipWithStoreDTO, storeInfo dto.UpdateStoreDTOModel) error {
 
-	result := repo.DB.Model(&entities.Store{}).Where("id=?", storeId).Updates(storeInfo)
+	result := repo.DB.Model(&entities.Store{}).Where("id=? and owner_id=?", relation.StoreId, relation.OwnerId).Updates(storeInfo)
 
 	if result.RowsAffected == 0 {
 		return errors.New("Store info update failure")

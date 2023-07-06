@@ -133,7 +133,15 @@ func (srv *storeServiceImpl) GetStoresByOwnerId(ctx context.Context, ownerId str
 
 }
 
-func (srv *storeServiceImpl) UpdateStoreInfoByStoreId(ctx context.Context, storeId string, data request.UpdateStoreRequestModel) {
+func (srv *storeServiceImpl) UpdateStoreInfoByStoreId(
+	ctx context.Context,
+	relation request.UserRelationShipWithStore,
+	data request.UpdateStoreRequestModel) {
+
+	relationDTO := dto.UserRelationShipWithStoreDTO{
+		OwnerId: relation.OwnerId,
+		StoreId: relation.StoreId,
+	}
 
 	storeInfo := dto.UpdateStoreDTOModel{
 		StoreName: data.StoreName,
@@ -143,7 +151,7 @@ func (srv *storeServiceImpl) UpdateStoreInfoByStoreId(ctx context.Context, store
 		UpdatedAt: time.Now(),
 	}
 
-	err := srv.StoreRepository.UpdateStoreByStoreId(storeId, storeInfo)
+	err := srv.StoreRepository.UpdateStoreByStoreId(relationDTO, storeInfo)
 	exceptions.PanicLogging(err)
 
 }

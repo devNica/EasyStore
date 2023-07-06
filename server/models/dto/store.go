@@ -6,6 +6,11 @@ import (
 	"github.com/google/uuid"
 )
 
+type UserRelationShipWithStoreDTO struct {
+	OwnerId string
+	StoreId string
+}
+
 type StoreRegisterDTOModel struct {
 	Id        uuid.UUID
 	StoreName string

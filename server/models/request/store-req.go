@@ -1,5 +1,10 @@
 package request
 
+type UserRelationShipWithStore struct {
+	OwnerId string `json:"ownerId"`
+	StoreId string `json:"storeId"`
+}
+
 type StoreRequestModel struct {
 	StoreName string  `json:"storeName" validate:"required"`
 	Address   string  `json:"address" validate:"required"`

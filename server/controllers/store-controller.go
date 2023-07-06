@@ -56,14 +56,16 @@ func (controller storeController) GetStoreByOwnerId(c *fiber.Ctx) error {
 
 func (controller storeController) UpdateStore(c *fiber.Ctx) error {
 
-	var request request.UpdateStoreRequestModel
-	err := c.BodyParser(&request)
+	var storeData request.UpdateStoreRequestModel
+	err := c.BodyParser(&storeData)
 	exceptions.PanicLogging(err)
-	storeId := c.Params("storeId")
 
-	// fmt.Println(c.Locals("user"))
+	relation := request.UserRelationShipWithStore{
+		OwnerId: c.Locals("userId").(string),
+		StoreId: c.Params("storeId"),
+	}
 
-	controller.StoreService.UpdateStoreInfoByStoreId(c.Context(), storeId, request)
+	controller.StoreService.UpdateStoreInfoByStoreId(c.Context(), relation, storeData)
 	return c.Status(fiber.StatusAccepted).JSON(models.GeneralHttpResponseModel{
 		Code:    202,
 		Message: "Store has been updated successfull",
