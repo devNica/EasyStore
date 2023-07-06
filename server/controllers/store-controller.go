@@ -20,7 +20,7 @@ func NewStoreController(service *services.StoreService, config configurations.Co
 }
 
 func (controller storeController) Route(app *fiber.App) {
-	app.Post("/easystore/v1/store/:userId", controller.RegisterStore)
+	app.Post("/easystore/v1/store", middlewares.AuthenticateJWT("customers"), controller.RegisterStore)
 	app.Get("/easystore/v1/store", middlewares.AuthenticateJWT("owners"), controller.GetStoreByOwnerId)
 }
 
@@ -29,19 +29,21 @@ func (controller storeController) RegisterStore(c *fiber.Ctx) error {
 	err := c.BodyParser(&request)
 	exceptions.PanicLogging(err)
 
-	userId := c.Params("userId")
+	userId := c.Locals("userId").(string)
 
-	controller.StoreService.RegisterStore(c.Context(), request, userId)
+	result := controller.StoreService.RegisterStore(c.Context(), request, userId)
 	return c.Status(fiber.StatusCreated).JSON(models.GeneralHttpResponseModel{
 		Code:    201,
 		Message: "successfull store registration",
-		Data:    "",
+		Data:    result,
 	})
 }
 
 func (controller storeController) GetStoreByOwnerId(c *fiber.Ctx) error {
 
 	ownerId := c.Locals("userId").(string)
+
+	// fmt.Println(c.Locals("user"))
 
 	result := controller.StoreService.GetStoresByOwnerId(c.Context(), ownerId)
 	return c.Status(fiber.StatusOK).JSON(models.GeneralHttpResponseModel{

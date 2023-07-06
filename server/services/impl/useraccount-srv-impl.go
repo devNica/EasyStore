@@ -54,7 +54,8 @@ func (srv *userAccountServiceImpl) UserRegister(
 	}
 
 	roles := commons.GetRolesFromDictionary()
-	roleId := commons.GetKeyId("owners", roles)
+	/* a todos los usuarios se les asigna por defecto el rol de clientes*/
+	roleId := commons.GetKeyId("customers", roles)
 
 	err := srv.UserAccountRepository.CreateUser(user, roleId)
 	exceptions.PanicLogging(err)

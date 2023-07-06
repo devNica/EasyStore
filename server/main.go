@@ -24,7 +24,7 @@ func main() {
 
 	//services
 	userAccountService := service.NewUserAccountServiceImpl(&userAccountRepository, &adminCommitRepository, &argon)
-	storeService := service.NewStoreServiceImpl(&storeRepository)
+	storeService := service.NewStoreServiceImpl(&storeRepository, &userAccountRepository)
 
 	// controllers
 	authController := controllers.NewAuthController(&userAccountService, config)

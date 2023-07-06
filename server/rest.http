@@ -3,8 +3,8 @@ POST  http://localhost:8200/easystore/v1/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "test@devnica.com",
-    "password": "Laotra123*"
+    "email": "luxdev@devnica.com",
+    "password": "Lamisma123*"
 }
 
 ###### user account login
@@ -12,12 +12,12 @@ POST  http://localhost:8200/easystore/v1/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "lucasmarsell@devnica.com",
+    "email": "luxdev@devnica.com",
     "password": "Lamisma123*"
 }
 
 ###### update personal info
-PUT  http://localhost:8200/easystore/v1/user/7a701cd3-06e6-449d-9cad-a5eeba86dc7c HTTP/1.1
+PUT  http://localhost:8200/easystore/v1/user/88a503c6-d1b5-4483-82a3-148e7076e4ac HTTP/1.1
 Content-Type: application/json
 
 {
@@ -30,21 +30,22 @@ Content-Type: application/json
 }
 
 ###### register store
-POST  http://localhost:8200/easystore/v1/store/7a701cd3-06e6-449d-9cad-a5eeba86dc7c HTTP/1.1
+POST  http://localhost:8200/easystore/v1/store HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxYTgyMDczNC02MDc5LTQ2YWMtODhlMy1lNWY2YzQ5Yjk1ODIiLCJleHAiOjE2ODg2NzcwMjgsInJvbGVzIjpbeyJyb2xJZCI6Mywicm9sZSI6ImN1c3RvbWVycyJ9XX0.5G8N82yoreDmYHJcjZNHfTm7L_hbGJFQfnPCBD65kZM
 
 {
-    "storeName": "Pumas",
-    "address": "En la esquina opuesta al bar",
-    "nit": "RT-127878480",
-    "latitude": 11.907865,
-    "longitude": -83.9078564
+    "storeName": "Amores del Arte",
+    "address": "Mercado Periferico Modulo H5464",
+    "nit": "RT-0087800034",
+    "latitude": 13.424460,
+    "longitude": -88.441899
 }
 
 
 ###### get all stores by ownerId
 GET  http://localhost:8200/easystore/v1/store HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiJkZjIzMmFhYy04YzA1LTQ4YmItYjZkZi02Nzk5NmE2NjUzMmEiLCJleHAiOjE2ODg2NzA0MDYsInJvbGVzIjpbeyJyb2xJZCI6Miwicm9sZSI6Im93bmVycyJ9XX0.TkmeJWcnwHPkcMFJ3BtdxYVk1aIEFrN5NfU0WQBSWXg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxYTgyMDczNC02MDc5LTQ2YWMtODhlMy1lNWY2YzQ5Yjk1ODIiLCJleHAiOjE2ODg2NzcxODcsInJvbGVzIjpbeyJyb2xJZCI6Miwicm9sZSI6Im93bmVycyJ9LHsicm9sSWQiOjMsInJvbGUiOiJjdXN0b21lcnMifV19.RgXpDMOCLRci2DIisUmnPVBfjCv4TRVex_TORJJAeyM
 
 {}

@@ -8,6 +8,6 @@ import (
 )
 
 type StoreService interface {
-	RegisterStore(ctx context.Context, newStore request.StoreRequestModel, userId string)
+	RegisterStore(ctx context.Context, newStore request.StoreRequestModel, userId string) response.StoreRegisterResponseModel
 	GetStoresByOwnerId(ctx context.Context, ownerId string) []response.StoreResponseModel
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/devnica/EasyStore/models/dao"
 	"github.com/devnica/EasyStore/models/dto"
 	"github.com/devnica/EasyStore/repositories"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -100,6 +101,23 @@ func (repo *userAccountRepositoryImpl) InsertPersonalInfo(personalInfo dto.Perso
 
 	if result.RowsAffected == 0 {
 		return errors.New("Personal info update failure")
+	}
+
+	return nil
+}
+
+func (repo *userAccountRepositoryImpl) InsertRoleToUserAccount(userId uuid.UUID, roleId uint8) error {
+
+	userRoles := entities.UserHasRoles{
+		UserId:   userId,
+		RoleId:   roleId,
+		IsActive: true,
+	}
+
+	result := repo.DB.Create(&userRoles)
+
+	if result.RowsAffected == 0 {
+		return errors.New("could not add new role to user account")
 	}
 
 	return nil

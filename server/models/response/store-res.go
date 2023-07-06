@@ -6,6 +6,11 @@ import (
 	"github.com/google/uuid"
 )
 
+type StoreRegisterResponseModel struct {
+	Token          string `json:"token"`
+	TokenIsUpdated bool   `json:"tokenIsUpdated"`
+}
+
 type StoreResponseModel struct {
 	StoreId   uuid.UUID `json:"storeId"`
 	StoreName string    `json:"storeName"`
