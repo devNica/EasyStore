@@ -19,7 +19,7 @@ func NewStoreController(service *services.StoreService, config configurations.Co
 }
 
 func (controller storeController) Route(app *fiber.App) {
-	app.Post("/easystore/v1/store", controller.RegisterStore)
+	app.Post("/easystore/v1/store/:userId", controller.RegisterStore)
 }
 
 func (controller storeController) RegisterStore(c *fiber.Ctx) error {
