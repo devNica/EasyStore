@@ -2,6 +2,7 @@ package impl
 
 import (
 	"context"
+	"time"
 
 	"github.com/devnica/EasyStore/commons"
 	"github.com/devnica/EasyStore/commons/security"
@@ -129,5 +130,20 @@ func (srv *storeServiceImpl) GetStoresByOwnerId(ctx context.Context, ownerId str
 	}
 
 	return stores
+
+}
+
+func (srv *storeServiceImpl) UpdateStoreInfoByStoreId(ctx context.Context, storeId string, data request.UpdateStoreRequestModel) {
+
+	storeInfo := dto.UpdateStoreDTOModel{
+		StoreName: data.StoreName,
+		Address:   data.Address,
+		NIT:       data.NIT,
+		GeoHash:   geohash.Encode(data.Latitude, data.Longitude),
+		UpdatedAt: time.Now(),
+	}
+
+	err := srv.StoreRepository.UpdateStoreByStoreId(storeId, storeInfo)
+	exceptions.PanicLogging(err)
 
 }

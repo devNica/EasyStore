@@ -12,8 +12,8 @@ POST  http://localhost:8200/easystore/v1/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "luxdev@devnica.com",
-    "password": "Lamisma123*"
+    "email": "test@devnica.com",
+    "password": "Laotra123*"
 }
 
 ###### update personal info
@@ -49,3 +49,17 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxYTgyMDczNC02MDc5LTQ2YWMtODhlMy1lNWY2YzQ5Yjk1ODIiLCJleHAiOjE2ODg2NzcxODcsInJvbGVzIjpbeyJyb2xJZCI6Miwicm9sZSI6Im93bmVycyJ9LHsicm9sSWQiOjMsInJvbGUiOiJjdXN0b21lcnMifV19.RgXpDMOCLRci2DIisUmnPVBfjCv4TRVex_TORJJAeyM
 
 {}
+
+
+###### register store
+PUT  http://localhost:8200/easystore/v1/store/f2834ae9-195a-4e80-84cf-35c1931b1d25 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI4OGE1MDNjNi1kMWI1LTQ0ODMtODJhMy0xNDhlNzA3NmU0YWMiLCJleHAiOjE2ODg2ODI2NTksInJvbGVzIjpbeyJyb2xJZCI6Miwicm9sZSI6Im93bmVycyJ9LHsicm9sSWQiOjMsInJvbGUiOiJjdXN0b21lcnMifV19.RGQQMU0zsnGDf0nz8JodTabbLEfUxsusWnnJ4Z2c4vc
+
+{
+    "storeName": "Los Sabios sin estudio",
+    "address": "Plaza central la paz modulo T-564",
+    "nit": "RT-909787878",
+    "latitude": 13.657803,
+    "longitude": -81.7685787
+}

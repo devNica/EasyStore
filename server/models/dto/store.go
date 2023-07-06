@@ -15,3 +15,11 @@ type StoreRegisterDTOModel struct {
 	OwnerId   uuid.UUID
 	CreatedAt time.Time
 }
+
+type UpdateStoreDTOModel struct {
+	StoreName string
+	Address   string
+	NIT       string
+	GeoHash   string
+	UpdatedAt time.Time
+}

@@ -8,4 +8,5 @@ import (
 type StoreRepository interface {
 	CreateStore(data dto.StoreRegisterDTOModel) error
 	FetchStoresByOwnerId(ownerId string) ([]dao.StoreDAOModel, error)
+	UpdateStoreByStoreId(storeId string, storeInfo dto.UpdateStoreDTOModel) error
 }
