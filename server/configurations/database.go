@@ -31,11 +31,11 @@ func DatabaseConnect(config Config) *gorm.DB {
 		panic("Failed to connect database")
 	}
 
-	err = db.AutoMigrate(&entities.Rol{})
+	err = db.AutoMigrate(&entities.Roles{})
 	err = db.AutoMigrate(&entities.AccountStatus{})
 	err = db.AutoMigrate(&entities.ReviewStatus{})
 	err = db.AutoMigrate(&entities.UserAccount{})
-	err = db.AutoMigrate(&entities.UserHasRole{})
+	err = db.AutoMigrate(&entities.UserHasRoles{})
 	err = db.AutoMigrate(&entities.KYCReviewRequest{})
 	err = db.AutoMigrate(&entities.Store{})
 

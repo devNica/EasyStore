@@ -18,7 +18,7 @@ func NewUserAccountRepositoryImpl(DB *gorm.DB) repositories.UserAccountRepositor
 	return &userAccountRepositoryImpl{DB: DB}
 }
 
-func (repo *userAccountRepositoryImpl) CreateUser(data dto.UserRegisterDTOModel, rolId uint8) error {
+func (repo *userAccountRepositoryImpl) CreateUser(data dto.UserRegisterDTOModel, roleId uint8) error {
 
 	newUser := entities.UserAccount{
 		Id:            data.Id,
@@ -35,9 +35,9 @@ func (repo *userAccountRepositoryImpl) CreateUser(data dto.UserRegisterDTOModel,
 			return err
 		}
 
-		rol := entities.UserHasRole{
+		rol := entities.UserHasRoles{
 			UserId: newUser.Id,
-			RolId:  rolId,
+			RoleId: roleId,
 		}
 
 		if err := tx.Create(&rol).Error; err != nil {
@@ -77,13 +77,13 @@ func (repo *userAccountRepositoryImpl) FetchRolesByUserId(userId string) ([]dao.
 
 	var RolesResult []dao.RolDAOModel
 
-	result := repo.DB.Table("rol").
+	result := repo.DB.Table("roles").
 		Select(`
-		rol.id,
-		rol.rol
+		roles.id,
+		roles.role
 	`).
-		Joins("inner join user_has_role on user_has_role.rol_id = rol.id").
-		Joins("inner join user_account on user_account.id = user_has_role.user_id").
+		Joins("inner join user_has_roles on user_has_roles.role_id = roles.id").
+		Joins("inner join user_account on user_account.id = user_has_roles.user_id").
 		Where("user_account.id = ?", userId).Scan(&RolesResult)
 
 	if result.RowsAffected == 0 {

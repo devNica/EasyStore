@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/devnica/EasyStore/configurations"
 	"github.com/devnica/EasyStore/exceptions"
+	"github.com/devnica/EasyStore/middlewares"
 	"github.com/devnica/EasyStore/models"
 	"github.com/devnica/EasyStore/models/request"
 	"github.com/devnica/EasyStore/services"
@@ -20,7 +21,7 @@ func NewStoreController(service *services.StoreService, config configurations.Co
 
 func (controller storeController) Route(app *fiber.App) {
 	app.Post("/easystore/v1/store/:userId", controller.RegisterStore)
-	app.Get("/easystore/v1/store/:ownerId", controller.GetStoreByOwnerId)
+	app.Get("/easystore/v1/store", middlewares.AuthenticateJWT("owners"), controller.GetStoreByOwnerId)
 }
 
 func (controller storeController) RegisterStore(c *fiber.Ctx) error {
@@ -40,10 +41,10 @@ func (controller storeController) RegisterStore(c *fiber.Ctx) error {
 
 func (controller storeController) GetStoreByOwnerId(c *fiber.Ctx) error {
 
-	ownerId := c.Params("ownerId")
+	ownerId := c.Locals("userId").(string)
 
 	result := controller.StoreService.GetStoresByOwnerId(c.Context(), ownerId)
-	return c.Status(fiber.StatusCreated).JSON(models.GeneralHttpResponseModel{
+	return c.Status(fiber.StatusOK).JSON(models.GeneralHttpResponseModel{
 		Code:    200,
 		Message: "request success",
 		Data:    result,

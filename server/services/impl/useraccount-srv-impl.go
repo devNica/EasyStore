@@ -54,9 +54,9 @@ func (srv *userAccountServiceImpl) UserRegister(
 	}
 
 	roles := commons.GetRolesFromDictionary()
-	rolId := commons.GetKeyId("owners", roles)
+	roleId := commons.GetKeyId("owners", roles)
 
-	err := srv.UserAccountRepository.CreateUser(user, rolId)
+	err := srv.UserAccountRepository.CreateUser(user, roleId)
 	exceptions.PanicLogging(err)
 }
 

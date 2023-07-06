@@ -1,8 +1,6 @@
 package impl
 
 import (
-	"fmt"
-
 	"github.com/devnica/EasyStore/entities"
 	"github.com/devnica/EasyStore/models/dao"
 	"github.com/devnica/EasyStore/models/dto"
@@ -47,7 +45,6 @@ func (repo *storeRepositoryImpl) FetchStoresByOwnerId(ownerId string) ([]dao.Sto
 
 	var stores []dao.StoreDAOModel
 	for _, store := range storeResult {
-		fmt.Println(store)
 		stores = append(stores, dao.StoreDAOModel{
 			StoreId:   store.Id,
 			StoreName: store.StoreName,

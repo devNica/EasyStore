@@ -21,7 +21,8 @@ func AuthenticateJWT(role string) func(*fiber.Ctx) error {
 
 			for _, roleInterface := range roles {
 				roleMap := roleInterface.(map[string]interface{})
-				if roleMap["rol"] == role {
+				if roleMap["role"] == role {
+					ctx.Locals("userId", claims["UserId"])
 					return ctx.Next()
 				}
 			}

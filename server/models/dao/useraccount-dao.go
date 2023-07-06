@@ -7,8 +7,8 @@ import (
 )
 
 type RolDAOModel struct {
-	Id  uint8
-	Rol string
+	Id   uint8
+	Role string
 }
 
 type FindUserDAOModel struct {

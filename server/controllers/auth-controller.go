@@ -43,7 +43,7 @@ func (controller authController) UserLogin(c *fiber.Ctx) error {
 	exceptions.PanicLogging(err)
 
 	user := controller.UserAccountService.GetUserByEmail(c.Context(), request)
-	return c.Status(fiber.StatusCreated).JSON(models.GeneralHttpResponseModel{
+	return c.Status(fiber.StatusOK).JSON(models.GeneralHttpResponseModel{
 		Code:    200,
 		Message: "Login successfully",
 		Data:    user,
@@ -58,8 +58,8 @@ func (controller authController) UpdatePersonalInfo(c *fiber.Ctx) error {
 	userId := c.Params("userId")
 
 	controller.UserAccountService.UpdatePersonalInfo(c.Context(), request, userId)
-	return c.Status(fiber.StatusCreated).JSON(models.GeneralHttpResponseModel{
-		Code:    201,
+	return c.Status(fiber.StatusAccepted).JSON(models.GeneralHttpResponseModel{
+		Code:    202,
 		Message: "Update personal info",
 		Data:    "",
 	})

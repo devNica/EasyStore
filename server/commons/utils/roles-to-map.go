@@ -10,7 +10,7 @@ func ConvertRolesToMaps(roles []dao.RolDAOModel) []map[string]interface{} {
 	for _, rol := range roles {
 		rolMap := make(map[string]interface{})
 		rolMap["rolId"] = rol.Id
-		rolMap["rol"] = rol.Rol
+		rolMap["role"] = rol.Role
 
 		rolesMaps = append(rolesMaps, rolMap)
 	}
