@@ -2,6 +2,7 @@ package impl
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -82,6 +83,8 @@ func (srv *userAccountServiceImpl) GetUserByEmail(ctx context.Context, data requ
 	rolesMap := utils.ConvertRolesToMaps(roles)
 
 	login.Token = security.GenerateToken(login.UserId, rolesMap)
+
+	fmt.Println(login.Token)
 
 	return login
 }
