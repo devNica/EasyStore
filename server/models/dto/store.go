@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
-type UserRelationShipWithStoreDTO struct {
+type KeyComposeUserStoreDTOModel struct {
 	OwnerId string
 	StoreId string
 }

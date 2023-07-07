@@ -12,8 +12,8 @@ POST  http://localhost:8200/easystore/v1/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "luxdev@devnica.com",
-    "password": "Lamisma123*"
+    "email": "test@devnica.com",
+    "password": "Laotra123*"
 }
 
 ###### update personal info
@@ -52,14 +52,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxYTgyM
 
 
 ###### register store
-PUT  http://localhost:8200/easystore/v1/store/d181b960-437b-4a6a-8f6c-5a94756a09f5 HTTP/1.1
+PUT  http://localhost:8200/easystore/v1/store/f2834ae9-195a-4e80-84cf-35c1931b1d25 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxYTgyMDczNC02MDc5LTQ2YWMtODhlMy1lNWY2YzQ5Yjk1ODIiLCJleHAiOjE2ODg2ODc4NTMsInJvbGVzIjpbeyJyb2xJZCI6Miwicm9sZSI6Im93bmVycyJ9LHsicm9sSWQiOjMsInJvbGUiOiJjdXN0b21lcnMifV19.1w4wkTkrFrxNraUaZrK3pUY2tCfjdnVm2UMM58NG4TA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI4OGE1MDNjNi1kMWI1LTQ0ODMtODJhMy0xNDhlNzA3NmU0YWMiLCJleHAiOjE2ODg3NDc2MzksInJvbGVzIjpbeyJyb2xJZCI6Miwicm9sZSI6Im93bmVycyJ9LHsicm9sSWQiOjMsInJvbGUiOiJjdXN0b21lcnMifV19.phEX1lBRvH-IUK7dftXdok88q61a9JctYbuitza2ni0
 
 {
-    "storeName": "Los Sabios",
-    "address": "Plaza Oriental Modulo T90767",
-    "nit": "RT-4676459890",
-    "latitude": 13.656803,
-    "longitude": -81.2390954
+    "storeName": "Bar-ato",
+    "address": "Mercado Central Modulo GH45",
+    "nit": "RT-0000909888",
+    "latitude": 13.654234,
+    "longitude": -81.239067
 }

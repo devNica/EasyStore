@@ -8,5 +8,5 @@ import (
 type StoreRepository interface {
 	CreateStore(data dto.StoreRegisterDTOModel) error
 	FetchStoresByOwnerId(ownerId string) ([]dao.StoreDAOModel, error)
-	UpdateStoreByStoreId(relation dto.UserRelationShipWithStoreDTO, storeInfo dto.UpdateStoreDTOModel) error
+	UpdateStoreByStoreId(relation dto.KeyComposeUserStoreDTOModel, storeInfo dto.UpdateStoreDTOModel) error
 }

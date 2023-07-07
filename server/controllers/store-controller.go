@@ -60,7 +60,7 @@ func (controller storeController) UpdateStore(c *fiber.Ctx) error {
 	err := c.BodyParser(&storeData)
 	exceptions.PanicLogging(err)
 
-	relation := request.UserRelationShipWithStore{
+	relation := request.KeyComposedUserStoreModel{
 		OwnerId: c.Locals("userId").(string),
 		StoreId: c.Params("storeId"),
 	}

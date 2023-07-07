@@ -1,6 +1,6 @@
 package request
 
-type UserRelationShipWithStore struct {
+type KeyComposedUserStoreModel struct {
 	OwnerId string `json:"ownerId"`
 	StoreId string `json:"storeId"`
 }
