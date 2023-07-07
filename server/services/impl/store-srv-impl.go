@@ -20,18 +20,24 @@ import (
 type storeServiceImpl struct {
 	repositories.UserAccountRepository
 	repositories.StoreRepository
+	repositories.FileRepository
 }
 
-func NewStoreServiceImpl(storeRepo *repositories.StoreRepository, accRepo *repositories.UserAccountRepository) services.StoreService {
+func NewStoreServiceImpl(
+	storeRepo *repositories.StoreRepository,
+	accRepo *repositories.UserAccountRepository,
+	fileRepo *repositories.FileRepository) services.StoreService {
 	return &storeServiceImpl{
 		StoreRepository:       *storeRepo,
 		UserAccountRepository: *accRepo,
+		FileRepository:        *fileRepo,
 	}
 }
 
 func (srv *storeServiceImpl) RegisterStore(
 	ctx context.Context,
 	newStore request.StoreRequestModel,
+	asset request.FileRequestModel,
 	userId string) response.StoreRegisterResponseModel {
 
 	ownerId, err := uuid.Parse(userId)
@@ -48,6 +54,17 @@ func (srv *storeServiceImpl) RegisterStore(
 	}
 
 	err = srv.StoreRepository.CreateStore(storeDTO)
+	exceptions.PanicLogging(err)
+
+	assetDTO := dto.InsertFileDTOModel{
+		Filename:  uuid.New(),
+		Filetype:  asset.Filetype,
+		Filesize:  asset.Filesize,
+		Binary:    asset.Buffer,
+		CreatedAt: time.Now(),
+	}
+
+	err = srv.FileRepository.InsertStoreAsset(assetDTO, storeDTO.Id)
 	exceptions.PanicLogging(err)
 
 	/*

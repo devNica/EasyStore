@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"bytes"
+	"io"
+
 	"github.com/devnica/EasyStore/configurations"
 	"github.com/devnica/EasyStore/exceptions"
 	"github.com/devnica/EasyStore/middlewares"
@@ -26,13 +29,29 @@ func (controller storeController) Route(app *fiber.App) {
 }
 
 func (controller storeController) RegisterStore(c *fiber.Ctx) error {
-	var request request.StoreRequestModel
-	err := c.BodyParser(&request)
+	var data request.StoreRequestModel
+	err := c.BodyParser(&data)
 	exceptions.PanicLogging(err)
 
 	userId := c.Locals("userId").(string)
 
-	result := controller.StoreService.RegisterStore(c.Context(), request, userId)
+	var fileRequest request.FileRequestModel
+
+	file, paramFileErr := c.FormFile("storePicture")
+	exceptions.PanicLogging(paramFileErr)
+
+	buffer, bufferErr := file.Open()
+	exceptions.PanicLogging(bufferErr)
+	defer buffer.Close()
+
+	buf := bytes.NewBuffer(nil)
+	io.Copy(buf, buffer)
+
+	fileRequest.Buffer = buf.Bytes()
+	fileRequest.Filetype = file.Header.Get("Content-Type")
+	fileRequest.Filesize = int(file.Size)
+
+	result := controller.StoreService.RegisterStore(c.Context(), data, fileRequest, userId)
 	return c.Status(fiber.StatusCreated).JSON(models.GeneralHttpResponseModel{
 		Code:    201,
 		Message: "successfull store registration",
