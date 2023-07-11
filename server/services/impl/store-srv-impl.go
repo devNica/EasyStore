@@ -2,6 +2,7 @@ package impl
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/devnica/EasyStore/commons"
@@ -41,6 +42,13 @@ func (srv *storeServiceImpl) RegisterStore(
 	userId string) response.StoreRegisterResponseModel {
 
 	ownerId, err := uuid.Parse(userId)
+
+	result, err := srv.UserAccountRepository.FetchStatusAccountByUserId(ownerId)
+	exceptions.PanicLogging(err)
+
+	if result.Status != "approved" {
+		exceptions.PanicLogging(errors.New("the user account has not been approved"))
+	}
 
 	exceptions.PanicLogging(err)
 

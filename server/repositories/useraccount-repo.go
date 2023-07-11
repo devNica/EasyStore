@@ -12,4 +12,5 @@ type UserAccountRepository interface {
 	FetchRolesByUserId(userId string) ([]dao.RolDAOModel, error)
 	InsertPersonalInfo(personalInfo dto.PersonalInfoDTOModel, userId string) error
 	InsertRoleToUserAccount(userId uuid.UUID, roleId uint8) error
+	FetchStatusAccountByUserId(userId uuid.UUID) (dao.AccounStatusDAOModel, error)
 }

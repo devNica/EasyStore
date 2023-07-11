@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
     "email": "test@devnica.com",
-    "password": "Laotra123*"
+    "password": "Lamisma123*"
 }
 
 ###### update personal info
@@ -32,14 +32,14 @@ Content-Type: application/json
 ###### register store
 POST  http://localhost:8200/easystore/v1/store HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxYTgyMDczNC02MDc5LTQ2YWMtODhlMy1lNWY2YzQ5Yjk1ODIiLCJleHAiOjE2ODg2NzcwMjgsInJvbGVzIjpbeyJyb2xJZCI6Mywicm9sZSI6ImN1c3RvbWVycyJ9XX0.5G8N82yoreDmYHJcjZNHfTm7L_hbGJFQfnPCBD65kZM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI5ZmJlMGFkOC1mMzQ5LTQzMzUtYmQ3Ny0yNDYwODlkYWRkMTYiLCJleHAiOjE2ODkxMjE5NTksInJvbGVzIjpbeyJyb2xJZCI6Miwicm9sZSI6Im93bmVycyJ9LHsicm9sSWQiOjMsInJvbGUiOiJjdXN0b21lcnMifV19.vMDG7n7JrrDDXfKLGNrjQy1ci9FIYpTuQyRZZ5N8ALw
 
 {
-    "storeName": "Amores del Arte",
-    "address": "Mercado Periferico Modulo H5464",
-    "nit": "RT-0087800034",
-    "latitude": 13.424460,
-    "longitude": -88.441899
+    "storeName": "El cafe de lucas",
+    "address": "Parque de Ferias Central ET67",
+    "nit": "RT-0000078665",
+    "latitude": 13.489460,
+    "longitude": -88.449099
 }
 
 

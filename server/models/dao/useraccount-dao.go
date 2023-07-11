@@ -17,3 +17,7 @@ type FindUserDAOModel struct {
 	Password  string
 	CreatedAt time.Time
 }
+
+type AccounStatusDAOModel struct {
+	Status string
+}

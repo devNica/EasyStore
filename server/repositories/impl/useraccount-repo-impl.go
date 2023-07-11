@@ -122,3 +122,21 @@ func (repo *userAccountRepositoryImpl) InsertRoleToUserAccount(userId uuid.UUID,
 
 	return nil
 }
+
+func (repo *userAccountRepositoryImpl) FetchStatusAccountByUserId(userId uuid.UUID) (dao.AccounStatusDAOModel, error) {
+
+	var statusResult dao.AccounStatusDAOModel
+
+	result := repo.DB.Table("account_status").
+		Select(`
+		account_status.status
+	`).
+		Joins("inner join user_account on user_account.status_id = account_status.id").
+		Where("user_account.id = ?", userId).Scan(&statusResult)
+
+	if result.RowsAffected == 0 {
+		return dao.AccounStatusDAOModel{}, errors.New("User not found")
+	}
+
+	return statusResult, nil
+}
