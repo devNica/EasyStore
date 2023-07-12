@@ -18,7 +18,7 @@ var accountStatus = map[string]uint8{
 }
 
 var reviewStatus = map[string]uint8{
-	"peding assigment":   1,
+	"pending assigment":  1,
 	"review in progress": 2,
 	"confirming changes": 3,
 	"review finished":    4,
@@ -33,6 +33,11 @@ func GetRolesFromDictionary() interface{} {
 func GetAccountStatusFromDictionary() interface{} {
 	dict["status"] = accountStatus
 	return dict["status"]
+}
+
+func GetReviewStatusFromDictionary() interface{} {
+	dict["reviewStatus"] = reviewStatus
+	return dict["reviewStatus"]
 }
 
 func GetKeyId(key string, dictionary interface{}) uint8 {
